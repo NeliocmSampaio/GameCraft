@@ -1,9 +1,8 @@
 package engine
 
 import (
-	"bufio"
 	"fmt"
-	"os"
+	"log"
 )
 
 type Engine interface {
@@ -26,14 +25,15 @@ func (e *engine) Run() error {
 	e.running = true
 
 	for e.isRunning() {
-		rdr := bufio.NewReader(os.Stdin)
-		c, err := rdr.ReadString('\n')
-		if err != nil {
-			fmt.Println("error!")
+		var c string
+		fmt.Scanln(&c)
+
+		if c == "quit()" {
+			e.running = false
 		}
 
-		e.running = false
-		fmt.Print(c)
+		log.Println(c)
+		// fmt.Println(c)
 	}
 
 	return nil
